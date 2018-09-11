@@ -180,10 +180,14 @@ var renderCard = function (ad) {
   var featuresList = cardElement.querySelector('.popup__features');
   var renderFeatures = function (features) {
     var featuresFragment = document.createDocumentFragment();
-    for (var featuresIndex = 0; featuresIndex < features.length; featuresIndex++) {
-      var featuresElement = featuresList.querySelector('li').cloneNode(true);
-      featuresElement.classList.add('popup__feature', 'popup__feature--' + features[featuresIndex]);
-      featuresFragment.appendChild(featuresElement);
+    if (features.length) {
+      for (var featuresIndex = 0; featuresIndex < features.length; featuresIndex++) {
+        var featuresElement = featuresList.querySelector('li').cloneNode(true);
+        featuresElement.classList.add('popup__feature', 'popup__feature--' + features[featuresIndex]);
+        featuresFragment.appendChild(featuresElement);
+      }
+    } else {
+      featuresList.classList.add('hidden');
     }
     featuresList.innerHTML = '';
     featuresList.appendChild(featuresFragment);
@@ -210,5 +214,5 @@ var renderCard = function (ad) {
   return cardElement;
 };
 
-fragment.appendChild(renderCard(ads[getRandomNumber(1, 8)]));
+fragment.appendChild(renderCard(ads[getRandomNumber(0, 8)]));
 document.querySelector('.map').appendChild(fragment);
