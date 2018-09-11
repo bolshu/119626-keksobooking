@@ -2,12 +2,12 @@
 
 var map = document.querySelector('.map');
 var ads = [];
-var adsLength = 8;
+var ADS_LENGTH = 8;
 var AdPamareters = {
   author: {
     authors: [],
     generateArray: function () {
-      for (var i = 0; i < adsLength; i++) {
+      for (var i = 0; i < ADS_LENGTH; i++) {
         AdPamareters.author.authors[i] = i + 1;
       }
     }
@@ -93,7 +93,7 @@ AdPamareters.author.generateArray();
 shuffleArray(AdPamareters.author.authors);
 
 var generateAds = function () {
-  for (var i = 0; i < adsLength; i++) {
+  for (var i = 0; i < ADS_LENGTH; i++) {
     ads[i] = {
       author: {
         avatar: 'img/avatars/user0' + AdPamareters.author.authors[i] + '.png'
@@ -127,13 +127,16 @@ var markTemplate = document.querySelector('#pin').content.querySelector('.map__p
 
 var renderMark = function (ad) {
   var markElement = markTemplate.cloneNode(true);
-  var pinArrowHeight = 22;
+  var PIN_ARROW_HEIGHT = 22;
   var pinOffsetX = markElement.offsetWidth / 2;
-  var pinOffsetY = markElement.offsetWidth + pinArrowHeight;
-  markElement.querySelector('img').setAttribute('src', ad.author.avatar);
-  markElement.querySelector('img').setAttribute('alt', ad.offer.title);
+  var pinOffsetY = markElement.offsetWidth + PIN_ARROW_HEIGHT;
+  markElement.querySelector('img').src = ad.author.avatar;
+  markElement.querySelector('img').alt = ad.offer.title;
   markElement.style.left = ad.location.x - pinOffsetX + 'px';
   markElement.style.top = ad.location.y - pinOffsetY + 'px';
+
+  // markElement.addEventListener('click', onMarkClick); // Обработчик события
+
   return markElement;
 };
 
@@ -147,21 +150,28 @@ document.querySelector('.map__pins').appendChild(fragment);
 
 var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
+var TYPES = {
+  flat: {
+    ru: 'Квартира'
+  },
+  bungalo: {
+    ru: 'Бунгало'
+  },
+  house: {
+    ru: 'Дом'
+  },
+  palace: {
+    ru: 'Дворец'
+  }
+};
+
 var renderCard = function (ad) {
   var cardElement = cardTemplate.cloneNode(true);
   cardElement.querySelector('.popup__title').textContent = ad.offer.title;
   cardElement.querySelector('.popup__text--address').textContent = ad.offer.address;
   cardElement.querySelector('.popup__text--price').textContent = ad.offer.price + '₽/ночь';
 
-  if (ad.offer.type === 'flat') {
-    cardElement.querySelector('.popup__type').textContent = 'Квартира';
-  } else if (ad.offer.type === 'bungalo') {
-    cardElement.querySelector('.popup__type').textContent = 'Бунгало';
-  } else if (ad.offer.type === 'house') {
-    cardElement.querySelector('.popup__type').textContent = 'Дом';
-  } else {
-    cardElement.querySelector('.popup__type').textContent = 'Дворец';
-  }
+  cardElement.querySelector('.popup__type').textContent = TYPES[ad.offer.type].ru;
 
   cardElement.querySelector('.popup__text--capacity').textContent = ad.offer.rooms + ' комнаты для ' + ad.offer.guests + ' гостей';
 
@@ -172,7 +182,7 @@ var renderCard = function (ad) {
     var featuresFragment = document.createDocumentFragment();
     for (var featuresIndex = 0; featuresIndex < features.length; featuresIndex++) {
       var featuresElement = featuresList.querySelector('li').cloneNode(true);
-      featuresElement.setAttribute('class', 'popup__feature popup__feature--' + features[featuresIndex]);
+      featuresElement.classList.add('popup__feature', 'popup__feature--' + features[featuresIndex]);
       featuresFragment.appendChild(featuresElement);
     }
     featuresList.innerHTML = '';
@@ -187,7 +197,7 @@ var renderCard = function (ad) {
     var photoFragment = document.createDocumentFragment();
     for (var photoIndex = 0; photoIndex < photos.length; photoIndex++) {
       var photoElement = photoList.querySelector('img').cloneNode(true);
-      photoElement.setAttribute('src', photos[photoIndex]);
+      photoElement.src = photos[photoIndex];
       photoFragment.appendChild(photoElement);
     }
     photoList.innerHTML = '';
@@ -195,32 +205,10 @@ var renderCard = function (ad) {
   };
   renderPhoto(ad.offer.photos);
 
-  cardElement.querySelector('.popup__avatar').setAttribute('src', ad.author.avatar);
+  cardElement.querySelector('.popup__avatar').src = ad.author.avatar;
 
   return cardElement;
 };
 
-var markCollection = document.querySelectorAll('.map__pin');
-
-for (var i = 1; i < markCollection.length; i++) {
-  markCollection[i].addEventListener('click', showPopup(i));
-}
-
-function removePopup() {
-  var cards = document.querySelectorAll('.map__card');
-  for (var x = 0; x < cards.length; x++) {
-    document.querySelector('.map').removeChild(cards[x]);
-  }
-}
-
-function showPopup(markIndex) {
-  return function () {
-    removePopup();
-    for (var g = 0; g < markCollection.length; g++) {
-      markCollection[g].classList.remove('map__pin--active');
-    }
-    markCollection[markIndex].classList.add('map__pin--active');
-    fragment.appendChild(renderCard(ads[getRandomNumber(0, 8)]));
-    document.querySelector('.map').appendChild(fragment);
-  };
-}
+fragment.appendChild(renderCard(ads[getRandomNumber(1, 8)]));
+document.querySelector('.map').appendChild(fragment);
