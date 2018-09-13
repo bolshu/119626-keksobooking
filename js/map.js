@@ -128,7 +128,7 @@ var onCardCloseBtnClick = function () {
 };
 
 var onMarkClick = function () {
-  if (document.querySelector('.popup')) {
+  if (document.querySelector('.map__card')) {
     removeCardPopup();
   }
   fragment.appendChild(renderCard(ads[0]));
@@ -136,7 +136,7 @@ var onMarkClick = function () {
 };
 
 var removeCardPopup = function () {
-  map.removeChild(document.querySelector('.popup'));
+  map.removeChild(document.querySelector('.map__card'));
 };
 
 var renderMark = function (ad) {
