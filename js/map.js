@@ -262,6 +262,14 @@ var disableInputs = function () {
 };
 disableInputs();
 
+var setAddresCoordinates = function () {
+  var addressField = form.querySelector('#address');
+  var pinWidth = mainPin.offsetWidth;
+  var pinHeight = mainPin.offsetHeight;
+  var coordinates = (mainPin.offsetLeft + pinWidth / 2).toFixed() + ', ' + (mainPin.offsetTop + pinHeight / 2).toFixed();
+  addressField.value = coordinates;
+};
+
 var activatePage = function () {
   for (var i = 0; i < formInputs.length; i++) {
     formInputs[i].disabled = false;
@@ -276,14 +284,5 @@ var activatePage = function () {
 
   setAddresCoordinates();
 };
-
-var setAddresCoordinates = function () {
-  var addressField = form.querySelector('#address');
-  var pinWidth = mainPin.offsetWidth;
-  var pinHeight = mainPin.offsetHeight;
-  var coordinates = (mainPin.offsetLeft + pinWidth / 2).toFixed() + ', ' + (mainPin.offsetTop + pinHeight / 2).toFixed();
-  addressField.value = coordinates;
-};
-
 
 mainPin.addEventListener('mouseup', activatePage);
