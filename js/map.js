@@ -164,7 +164,7 @@ var renderMark = function (ad) {
   markElement.style.left = ad.location.x - pinOffsetX + 'px';
   markElement.style.top = ad.location.y - pinOffsetY + 'px';
 
-  markElement.addEventListener('click', onMarkClick, true);
+  markElement.addEventListener('click', onMarkClick);
 
   return markElement;
 };
