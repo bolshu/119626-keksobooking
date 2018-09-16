@@ -271,18 +271,20 @@ var setAddresCoordinates = function () {
 };
 
 var activatePage = function () {
-  for (var i = 0; i < formInputs.length; i++) {
-    formInputs[i].disabled = false;
-  }
-  for (var j = 0; j < filterInputs.length; j++) {
-    filterInputs[j].disabled = false;
-  }
-  mapPins.appendChild(fragment);
-  map.classList.remove('map--faded');
-  form.classList.remove('ad-form--disabled');
-  addMarks();
+  if (map.classList.contains('map--faded')) {
+    for (var i = 0; i < formInputs.length; i++) {
+      formInputs[i].disabled = false;
+    }
+    for (var j = 0; j < filterInputs.length; j++) {
+      filterInputs[j].disabled = false;
+    }
+    mapPins.appendChild(fragment);
+    map.classList.remove('map--faded');
+    form.classList.remove('ad-form--disabled');
+    setAddresCoordinates();
 
-  setAddresCoordinates();
+    addMarks();
+  }
 };
 
 mainPin.addEventListener('mouseup', activatePage);
