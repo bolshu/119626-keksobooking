@@ -135,16 +135,10 @@ var onPopupEscPress = function (evt) {
   }
 };
 
-var onMarkClick = function (evt) {
+var onMarkClick = function (evt, ad) {
   removeCardPopup();
   document.addEventListener('keydown', onPopupEscPress);
-
-  var pins = map.querySelectorAll('.map__pin:not(.map__pin--main)');
-  for (var i = 0; i < ADS_LENGTH; i++) {
-    if (pins[i] === evt.currentTarget) {
-      fragment.appendChild(renderCard(ads[i]));
-    }
-  }
+  fragment.appendChild(renderCard(ad));
   map.appendChild(fragment);
 };
 
@@ -164,7 +158,9 @@ var renderMark = function (ad) {
   markElement.style.left = ad.location.x - pinOffsetX + 'px';
   markElement.style.top = ad.location.y - pinOffsetY + 'px';
 
-  markElement.addEventListener('click', onMarkClick);
+  markElement.addEventListener('click', function (evt) {
+    onMarkClick(evt, ad);
+  });
 
   return markElement;
 };
