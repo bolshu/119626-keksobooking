@@ -4,6 +4,7 @@ var map = document.querySelector('.map');
 var mapPins = document.querySelector('.map__pins');
 var ads = [];
 var ADS_LENGTH = 8;
+var PIN_ARROW_HEIGHT = 22;
 var AdPamareters = {
   author: {
     authors: [],
@@ -150,7 +151,6 @@ var removeCardPopup = function () {
 
 var renderMark = function (ad) {
   var markElement = markTemplate.cloneNode(true);
-  var PIN_ARROW_HEIGHT = 22;
   var pinOffsetX = markElement.offsetWidth / 2;
   var pinOffsetY = markElement.offsetWidth + PIN_ARROW_HEIGHT;
   markElement.querySelector('img').src = ad.author.avatar;
@@ -262,7 +262,7 @@ var setAddresCoords = function () {
   var addressField = form.querySelector('#address');
   var pinWidth = mainPin.offsetWidth;
   var pinHeight = mainPin.offsetHeight;
-  var coords = (mainPin.offsetLeft + pinWidth / 2).toFixed() + ', ' + (mainPin.offsetTop + pinHeight / 2).toFixed();
+  var coords = (mainPin.offsetLeft + pinWidth / 2).toFixed() + ', ' + (mainPin.offsetTop + pinHeight + PIN_ARROW_HEIGHT).toFixed();
   addressField.value = coords;
 };
 
