@@ -8,42 +8,23 @@ var timeOutInput = form.querySelector('#timeout');
 var roomNumberInput = form.querySelector('#room_number');
 var capacityInput = form.querySelector('#capacity');
 
-var TYPES = {
-  flat: {
-    ru: 'Квартира',
-    minPrice: 1000
-  },
-  bungalo: {
-    ru: 'Бунгало',
-    minPrice: 0
-  },
-  house: {
-    ru: 'Дом',
-    minPrice: 5000
-  },
-  palace: {
-    ru: 'Дворец',
-    minPrice: 10000
-  }
-};
-
 var limitationPrice = function () {
   switch (typeInput.value) {
     case 'flat':
-      priceInput.placeholder = TYPES.flat.minPrice;
-      priceInput.min = TYPES.flat.minPrice;
+      priceInput.placeholder = window.card.TYPES.flat.minPrice;
+      priceInput.min = window.card.TYPES.flat.minPrice;
       break;
     case 'house':
-      priceInput.placeholder = TYPES.house.minPrice;
-      priceInput.min = TYPES.house.minPrice;
+      priceInput.placeholder = window.card.TYPES.house.minPrice;
+      priceInput.min = window.card.TYPES.house.minPrice;
       break;
     case 'palace':
-      priceInput.placeholder = TYPES.palace.minPrice;
-      priceInput.min = TYPES.palace.minPrice;
+      priceInput.placeholder = window.card.TYPES.palace.minPrice;
+      priceInput.min = window.card.TYPES.palace.minPrice;
       break;
     default:
-      priceInput.placeholder = TYPES.bungalo.minPrice;
-      priceInput.min = TYPES.bungalo.minPrice;
+      priceInput.placeholder = window.card.TYPES.bungalo.minPrice;
+      priceInput.min = window.card.TYPES.bungalo.minPrice;
   }
 };
 limitationPrice();
