@@ -122,7 +122,7 @@
 
   window.data = {
     ads: ads,
-    ADS_LENGTH: ADS_LENGTH,
+    adsLength: ADS_LENGTH,
     shuffleArray: shuffleArray
   };
 })();

@@ -11,20 +11,20 @@ var capacityInput = form.querySelector('#capacity');
 var limitationPrice = function () {
   switch (typeInput.value) {
     case 'flat':
-      priceInput.placeholder = window.card.TYPES.flat.minPrice;
-      priceInput.min = window.card.TYPES.flat.minPrice;
+      priceInput.placeholder = window.card.types.flat.minPrice;
+      priceInput.min = window.card.types.flat.minPrice;
       break;
     case 'house':
-      priceInput.placeholder = window.card.TYPES.house.minPrice;
-      priceInput.min = window.card.TYPES.house.minPrice;
+      priceInput.placeholder = window.card.types.house.minPrice;
+      priceInput.min = window.card.types.house.minPrice;
       break;
     case 'palace':
-      priceInput.placeholder = window.card.TYPES.palace.minPrice;
-      priceInput.min = window.card.TYPES.palace.minPrice;
+      priceInput.placeholder = window.card.types.palace.minPrice;
+      priceInput.min = window.card.types.palace.minPrice;
       break;
     default:
-      priceInput.placeholder = window.card.TYPES.bungalo.minPrice;
-      priceInput.min = window.card.TYPES.bungalo.minPrice;
+      priceInput.placeholder = window.card.types.bungalo.minPrice;
+      priceInput.min = window.card.types.bungalo.minPrice;
   }
 };
 limitationPrice();

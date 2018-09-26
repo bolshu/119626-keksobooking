@@ -16,7 +16,7 @@
   var onMarkClick = function (evt, ad) {
     removeCardPopup();
     document.addEventListener('keydown', onPopupEscPress);
-    fragment.appendChild(window.card.renderCard(ad));
+    fragment.appendChild(window.card.render(ad));
     map.appendChild(fragment);
   };
 
@@ -45,7 +45,7 @@
   var fragment = document.createDocumentFragment();
 
   var addMarks = function () {
-    for (var i = 0; i < window.data.ADS_LENGTH; i++) {
+    for (var i = 0; i < window.data.adsLength; i++) {
       fragment.appendChild(renderMark(window.data.ads[i]));
     }
     mapPins.appendChild(fragment);
@@ -53,10 +53,10 @@
 
   window.map = {
     addMarks: addMarks,
-    removeCardPopup: removeCardPopup,
-    map: map,
-    mapPins: mapPins,
-    PIN_ARROW_HEIGHT: PIN_ARROW_HEIGHT,
+    removeCard: removeCardPopup,
+    element: map,
+    pins: mapPins,
+    pinArrowHeight: PIN_ARROW_HEIGHT,
     fragment: fragment
   };
 })();

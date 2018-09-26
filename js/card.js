@@ -23,7 +23,7 @@
   };
 
   var onCardCloseBtnClick = function () {
-    window.map.removeCardPopup();
+    window.map.removeCard();
   };
 
   var renderCard = function (ad) {
@@ -79,8 +79,8 @@
   };
 
   window.card = {
-    TYPES: TYPES,
-    renderCard: renderCard,
-    onCardCloseBtnClick: onCardCloseBtnClick
+    types: TYPES,
+    render: renderCard,
+    close: onCardCloseBtnClick
   };
 })();
