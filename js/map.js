@@ -45,10 +45,29 @@
   var fragment = document.createDocumentFragment();
 
   var addMarks = function () {
-    for (var i = 0; i < window.data.adsLength; i++) {
-      fragment.appendChild(renderMark(window.data.ads[i]));
-    }
-    mapPins.appendChild(fragment);
+    var onSuccess = function (ads) {
+      for (var i = 0; i < ads.length; i++) {
+        fragment.appendChild(renderMark(ads[i]));
+      }
+      mapPins.appendChild(fragment);
+    };
+
+    var onError = function (errorMessage) {
+      var errorTemplate = document.querySelector('#error').content.querySelector('.error');
+      var errorElement = errorTemplate.cloneNode(true);
+      var errorText = errorElement.querySelector('.error__message');
+      var errorButton = errorElement.querySelector('.error__button');
+      var onErrorButtonClick = function () {
+        document.querySelector('.error').remove();
+        errorButton.removeEventListener('click', onErrorButtonClick);
+        window.backend.loadData(onSuccess, onError);
+      };
+      errorText.textContent = errorMessage;
+      errorButton.addEventListener('click', onErrorButtonClick);
+      document.body.insertAdjacentElement('afterbegin', errorElement);
+    };
+
+    window.backend.loadData(onSuccess, onError);
   };
 
   window.map = {
