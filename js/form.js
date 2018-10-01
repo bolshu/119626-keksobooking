@@ -118,7 +118,7 @@
       var onErrorButtonClick = function () {
         document.querySelector('.error').remove();
         errorButton.removeEventListener('click', onErrorButtonClick);
-        window.backend.sendForm(formData, onSuccess, onError);
+        window.backend.request(onSuccess, onError, window.backend.upload.url, window.backend.upload.method, formData);
       };
       errorText.textContent = errorMessage;
       errorButton.addEventListener('click', onErrorButtonClick);
@@ -140,7 +140,7 @@
       document.addEventListener('keydown', onEscPress);
     };
 
-    window.backend.sendForm(formData, onSuccess, onError);
+    window.backend.request(onSuccess, onError, window.backend.upload.url, window.backend.upload.method, formData);
     submitEvt.preventDefault();
   };
 

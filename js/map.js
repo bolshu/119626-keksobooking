@@ -92,7 +92,7 @@
       var onErrorButtonClick = function () {
         document.querySelector('.error').remove();
         errorButton.removeEventListener('click', onErrorButtonClick);
-        window.backend.loadData(onSuccess, onError);
+        window.backend.request(onSuccess, onError, window.backend.load.url, window.backend.load.method);
       };
 
       errorText.textContent = errorMessage;
@@ -116,7 +116,7 @@
       errorElement.addEventListener('click', onErrorPopupClick);
     };
 
-    window.backend.loadData(onSuccess, onError);
+    window.backend.request(onSuccess, onError, window.backend.load.url, window.backend.load.method);
   };
 
   window.map = {
