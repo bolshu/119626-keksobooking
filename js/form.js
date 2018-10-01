@@ -29,6 +29,11 @@
   };
   limitationPrice();
 
+  var setDefaultPriceInput = function () {
+    priceInput.placeholder = window.card.types.flat.minPrice;
+    priceInput.min = window.card.types.flat.minPrice;
+  };
+
   var onTypeInputChange = function () {
     limitationPrice();
   };
@@ -73,4 +78,97 @@
     limitationCapacity();
   };
   roomNumberInput.addEventListener('change', onRoomNumberInputChange);
+
+  // send form
+
+  var onFormSubmit = function (submitEvt) {
+    var formData = new FormData(form);
+
+    var onSuccess = function () {
+      var successTemplate = document.querySelector('#success').content.querySelector('.success');
+      var successElement = successTemplate.cloneNode(true);
+      window.map.mainContainer.insertAdjacentElement('afterbegin', successElement);
+
+      var onSuccessElementClick = function (clickEvt) {
+        window.map.removeFeedbackPopup(clickEvt);
+        window.map.resetPage(successElement);
+        document.removeEventListener('keydown', onEscPress);
+      };
+      successElement.addEventListener('click', onSuccessElementClick);
+
+      var onEscPress = function (keydownEvt) {
+        if (keydownEvt.keyCode === window.map.escButton && successElement) {
+          window.map.resetPage(successElement);
+          document.removeEventListener('keydown', onEscPress);
+        }
+      };
+      document.addEventListener('keydown', onEscPress);
+
+      resetMainPinPosition();
+
+      window.map.removeCard();
+      form.reset();
+    };
+
+    var onError = function (errorMessage) {
+      var errorTemplate = document.querySelector('#error').content.querySelector('.error');
+      var errorElement = errorTemplate.cloneNode(true);
+      var errorText = errorElement.querySelector('.error__message');
+      var errorButton = errorElement.querySelector('.error__button');
+      var onErrorButtonClick = function () {
+        document.querySelector('.error').remove();
+        errorButton.removeEventListener('click', onErrorButtonClick);
+        window.backend.sendForm(formData, onSuccess, onError);
+      };
+      errorText.textContent = errorMessage;
+      errorButton.addEventListener('click', onErrorButtonClick);
+      window.map.mainContainer.insertAdjacentElement('afterbegin', errorElement);
+
+      var onErrorElementClick = function (clickEvt) {
+        window.map.removeFeedbackPopup(clickEvt);
+        document.removeEventListener('keydown', onEscPress);
+      };
+      errorElement.addEventListener('click', onErrorElementClick);
+
+      var onEscPress = function (keydownEvt) {
+        if (keydownEvt.keyCode === window.map.escButton && errorElement) {
+          errorElement.remove();
+          document.removeEventListener('keydown', onEscPress);
+        }
+      };
+      window.map.removeCard();
+      document.addEventListener('keydown', onEscPress);
+    };
+
+    window.backend.sendForm(formData, onSuccess, onError);
+    submitEvt.preventDefault();
+  };
+
+  form.addEventListener('submit', onFormSubmit);
+
+  var resetMainPinPosition = function () {
+    var MainPinBasePosition = {
+      top: 375,
+      left: 570
+    };
+    window.pin.main.style.top = MainPinBasePosition.top + 'px';
+    window.pin.main.style.left = MainPinBasePosition.left + 'px';
+  };
+
+  var resetFormButton = form.querySelector('.ad-form__reset');
+  var onResetFormButtonClick = function (clickEvt) {
+    clickEvt.preventDefault();
+    window.pin.deactivatePage();
+    window.form.resetMainPinPosition();
+    window.map.clearPins();
+    setDefaultPriceInput();
+    form.reset();
+  };
+
+  resetFormButton.addEventListener('click', onResetFormButtonClick);
+
+  window.form = {
+    resetMainPinPosition: resetMainPinPosition,
+    defaultPriceValue: setDefaultPriceInput
+  };
 })();
