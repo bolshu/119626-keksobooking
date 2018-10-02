@@ -58,7 +58,6 @@
     cardElement.querySelector('.popup__description').textContent = ad.offer.description;
 
     var renderPhoto = function (photos) {
-      window.data.shuffleArray(photos);
       var photoFragment = document.createDocumentFragment();
       var photoList = cardElement.querySelector('.popup__photos');
       for (var photoIndex = 0; photoIndex < photos.length; photoIndex++) {

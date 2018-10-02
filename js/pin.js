@@ -40,6 +40,17 @@
     }
   };
 
+  var deactivatePage = function () {
+    for (var i = 0; i < formInputs.length; i++) {
+      formInputs[i].disabled = true;
+    }
+    for (var j = 0; j < filterInputs.length; j++) {
+      filterInputs[j].disabled = true;
+    }
+    window.map.element.classList.add('map--faded');
+    form.classList.add('ad-form--disabled');
+  };
+
   mainPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
 
@@ -114,5 +125,10 @@
 
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
+
+    window.pin = {
+      main: mainPin,
+      deactivatePage: deactivatePage
+    };
   });
 })();

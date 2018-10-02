@@ -5,11 +5,19 @@
   var mapPins = document.querySelector('.map__pins');
   var PIN_ARROW_HEIGHT = 22;
   var markTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+  var mainContainer = document.querySelector('main');
 
   var ESC_KEYCODE = 27;
-  var onPopupEscPress = function (evt) {
-    if (evt.keyCode === ESC_KEYCODE) {
+  var onPopupEscPress = function (keydownEvt) {
+    if (keydownEvt.keyCode === ESC_KEYCODE) {
       removeCardPopup();
+    }
+  };
+
+  var removeActiveMark = function () {
+    var mapPinsCollection = mapPins.querySelectorAll('.map__pin');
+    for (var i = 0; i < mapPinsCollection.length; i++) {
+      mapPinsCollection[i].classList.remove('map__pin--active');
     }
   };
 
@@ -18,10 +26,13 @@
     document.addEventListener('keydown', onPopupEscPress);
     fragment.appendChild(window.card.render(ad));
     map.appendChild(fragment);
+    removeActiveMark();
+    evt.currentTarget.classList.add('map__pin--active');
   };
 
   var removeCardPopup = function () {
     if (document.querySelector('.map__card')) {
+      removeActiveMark();
       map.removeChild(document.querySelector('.map__card'));
     }
   };
@@ -44,11 +55,68 @@
 
   var fragment = document.createDocumentFragment();
 
-  var addMarks = function () {
-    for (var i = 0; i < window.data.adsLength; i++) {
-      fragment.appendChild(renderMark(window.data.ads[i]));
+  var removeFeedbackPopup = function (clickEvt) {
+    clickEvt.currentTarget.remove();
+  };
+
+  var clearPins = function () {
+    var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+    for (var i = 0; i < pins.length; i++) {
+      pins[i].remove();
     }
-    mapPins.appendChild(fragment);
+    removeCardPopup();
+  };
+
+  var resetPage = function (element) {
+    element.remove();
+    window.pin.deactivatePage();
+    window.form.resetMainPinPosition();
+    window.form.defaultPriceValue();
+    clearPins();
+  };
+
+  var addMarks = function () {
+    var onSuccess = function (ads) {
+      for (var i = 0; i < ads.length; i++) {
+        fragment.appendChild(renderMark(ads[i]));
+      }
+      mapPins.appendChild(fragment);
+    };
+
+    var onError = function (errorMessage) {
+      var errorTemplate = document.querySelector('#error').content.querySelector('.error');
+      var errorElement = errorTemplate.cloneNode(true);
+      var errorText = errorElement.querySelector('.error__message');
+      var errorButton = errorElement.querySelector('.error__button');
+
+      var onErrorButtonClick = function () {
+        document.querySelector('.error').remove();
+        errorButton.removeEventListener('click', onErrorButtonClick);
+        window.backend.request(onSuccess, onError, window.backend.load.url, window.backend.load.method);
+      };
+
+      errorText.textContent = errorMessage;
+      errorButton.addEventListener('click', onErrorButtonClick);
+      mainContainer.insertAdjacentElement('afterbegin', errorElement);
+
+      var onEscPress = function (keydownEvt) {
+        if (keydownEvt.keyCode === window.map.escButton && errorElement) {
+          resetPage(errorElement);
+          document.removeEventListener('keydown', onEscPress);
+        }
+      };
+      document.addEventListener('keydown', onEscPress);
+
+      var onErrorPopupClick = function (clickEvt) {
+        removeFeedbackPopup(clickEvt);
+        window.form.resetMainPinPosition();
+        window.pin.deactivatePage();
+        document.removeEventListener('keydown', onEscPress);
+      };
+      errorElement.addEventListener('click', onErrorPopupClick);
+    };
+
+    window.backend.request(onSuccess, onError, window.backend.load.url, window.backend.load.method);
   };
 
   window.map = {
@@ -57,6 +125,11 @@
     element: map,
     pins: mapPins,
     pinArrowHeight: PIN_ARROW_HEIGHT,
-    fragment: fragment
+    fragment: fragment,
+    escButton: ESC_KEYCODE,
+    removeFeedbackPopup: removeFeedbackPopup,
+    resetPage: resetPage,
+    mainContainer: mainContainer,
+    clearPins: clearPins
   };
 })();
