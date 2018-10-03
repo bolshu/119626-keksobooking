@@ -59,7 +59,7 @@
     clickEvt.currentTarget.remove();
   };
 
-  var clearPins = function () {
+  var removePins = function () {
     var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
     for (var i = 0; i < pins.length; i++) {
       pins[i].remove();
@@ -72,15 +72,20 @@
     window.pin.deactivatePage();
     window.form.resetMainPinPosition();
     window.form.defaultPriceValue();
-    clearPins();
+    removePins();
   };
 
-  var addMarks = function () {
+  var addMarks = function (ads) {
+    for (var i = 0; i < 5; i++) {
+      fragment.appendChild(renderMark(ads[i]));
+    }
+    mapPins.appendChild(fragment);
+  };
+
+  var loadMarks = function () {
     var onSuccess = function (ads) {
-      for (var i = 0; i < ads.length; i++) {
-        fragment.appendChild(renderMark(ads[i]));
-      }
-      mapPins.appendChild(fragment);
+      window.map.ads = ads;
+      addMarks(window.map.ads);
     };
 
     var onError = function (errorMessage) {
@@ -120,6 +125,7 @@
   };
 
   window.map = {
+    loadMarks: loadMarks,
     addMarks: addMarks,
     removeCard: removeCardPopup,
     element: map,
@@ -130,6 +136,6 @@
     removeFeedbackPopup: removeFeedbackPopup,
     resetPage: resetPage,
     mainContainer: mainContainer,
-    clearPins: clearPins
+    removePins: removePins
   };
 })();

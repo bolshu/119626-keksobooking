@@ -36,7 +36,7 @@
       window.map.element.classList.remove('map--faded');
       form.classList.remove('ad-form--disabled');
 
-      window.map.addMarks();
+      window.map.loadMarks();
     }
   };
 
