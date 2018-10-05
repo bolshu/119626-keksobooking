@@ -160,7 +160,7 @@
     clickEvt.preventDefault();
     window.pin.deactivatePage();
     window.form.resetMainPinPosition();
-    window.map.clearPins();
+    window.map.removePins();
     setDefaultPriceInput();
     form.reset();
   };

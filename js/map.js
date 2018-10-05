@@ -6,6 +6,7 @@
   var PIN_ARROW_HEIGHT = 22;
   var markTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
   var mainContainer = document.querySelector('main');
+  var ADS_AMOUNT = 5;
 
   var ESC_KEYCODE = 27;
   var onPopupEscPress = function (keydownEvt) {
@@ -59,7 +60,7 @@
     clickEvt.currentTarget.remove();
   };
 
-  var clearPins = function () {
+  var removePins = function () {
     var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
     for (var i = 0; i < pins.length; i++) {
       pins[i].remove();
@@ -72,15 +73,24 @@
     window.pin.deactivatePage();
     window.form.resetMainPinPosition();
     window.form.defaultPriceValue();
-    clearPins();
+    removePins();
   };
 
-  var addMarks = function () {
-    var onSuccess = function (ads) {
-      for (var i = 0; i < ads.length; i++) {
+  var addPins = function (ads) {
+    for (var i = 0; i < ADS_AMOUNT; i++) {
+      if (ads[i] !== undefined) {
         fragment.appendChild(renderMark(ads[i]));
+      } else {
+        break;
       }
-      mapPins.appendChild(fragment);
+    }
+    mapPins.appendChild(fragment);
+  };
+
+  var loadMarks = function () {
+    var onSuccess = function (ads) {
+      window.map.ads = ads;
+      addPins(window.map.ads);
     };
 
     var onError = function (errorMessage) {
@@ -120,7 +130,9 @@
   };
 
   window.map = {
-    addMarks: addMarks,
+    loadMarks: loadMarks,
+    addPins: addPins,
+    removePins: removePins,
     removeCard: removeCardPopup,
     element: map,
     pins: mapPins,
@@ -129,7 +141,6 @@
     escButton: ESC_KEYCODE,
     removeFeedbackPopup: removeFeedbackPopup,
     resetPage: resetPage,
-    mainContainer: mainContainer,
-    clearPins: clearPins
+    mainContainer: mainContainer
   };
 })();
