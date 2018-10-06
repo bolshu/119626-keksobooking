@@ -51,6 +51,14 @@
     form.classList.add('ad-form--disabled');
   };
 
+  var onMainPinClick = function () {
+    activatePage();
+    setAddresCoords();
+    mainPin.removeEventListener('click', onMainPinClick);
+  };
+
+  mainPin.addEventListener('click', onMainPinClick);
+
   mainPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
 
