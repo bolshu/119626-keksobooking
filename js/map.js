@@ -90,6 +90,7 @@
   var loadMarks = function () {
     var onSuccess = function (ads) {
       window.map.ads = ads;
+      window.pin.activatePage();
       addPins(window.map.ads);
     };
 
