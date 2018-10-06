@@ -61,12 +61,12 @@
       var HUNDRED_ROOMS = '100';
       var NOT_FOR_GUESTS = '0';
       var roomValue = value === HUNDRED_ROOMS ? NOT_FOR_GUESTS : value;
-      for (var j = 0; j < capacityOptions.length; j++) {
+      for (var i = 0; i < capacityOptions.length; i++) {
         var flag = true;
-        if ((capacityOptions[j].value > NOT_FOR_GUESTS && capacityOptions[j].value <= roomValue) || (roomValue === NOT_FOR_GUESTS && capacityOptions[j].value === roomValue)) {
+        if ((capacityOptions[i].value > NOT_FOR_GUESTS && capacityOptions[i].value <= roomValue) || (roomValue === NOT_FOR_GUESTS && capacityOptions[i].value === roomValue)) {
           flag = false;
         }
-        capacityOptions[j].disabled = flag;
+        capacityOptions[i].disabled = flag;
       }
       capacityInput.value = roomValue;
     };
@@ -78,6 +78,30 @@
     limitationCapacity();
   };
   roomNumberInput.addEventListener('change', onRoomNumberInputChange);
+
+  // validation
+
+  var submitButton = form.querySelector('.ad-form__submit');
+  var formRequiredInputs = form.querySelectorAll('input:invalid');
+  var checkInputValidation = function () {
+    var BorderColor = {
+      error: 'red',
+      valid: '#d9d9d3'
+    };
+    for (var i = 0; i < formRequiredInputs.length; i++) {
+      var input = formRequiredInputs[i];
+      input.style.borderColor = !input.validity.valid ? BorderColor.error : BorderColor.valid;
+      var onInput = function () {
+        checkInputValidation(input);
+      };
+      input.addEventListener('input', onInput);
+    }
+  };
+
+  var onSubmitButtonClick = function () {
+    checkInputValidation();
+  };
+  submitButton.addEventListener('click', onSubmitButtonClick);
 
   // send form
 
@@ -103,8 +127,6 @@
         }
       };
       document.addEventListener('keydown', onEscPress);
-
-      resetMainPinPosition();
 
       window.map.removeCard();
       form.reset();
@@ -159,12 +181,11 @@
   var onResetFormButtonClick = function (clickEvt) {
     clickEvt.preventDefault();
     window.pin.deactivatePage();
-    window.form.resetMainPinPosition();
     window.map.removePins();
+    resetMainPinPosition();
     setDefaultPriceInput();
     form.reset();
   };
-
   resetFormButton.addEventListener('click', onResetFormButtonClick);
 
   window.form = {
