@@ -35,8 +35,6 @@
       window.map.pins.appendChild(window.map.fragment);
       window.map.element.classList.remove('map--faded');
       form.classList.remove('ad-form--disabled');
-
-      window.map.loadMarks();
     }
   };
 
@@ -54,6 +52,7 @@
   var onMainPinClick = function () {
     activatePage();
     setAddresCoords();
+    window.map.loadMarks();
     mainPin.removeEventListener('click', onMainPinClick);
   };
 
