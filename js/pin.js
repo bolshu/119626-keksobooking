@@ -53,6 +53,7 @@
     activatePage();
     setAddresCoords();
     window.map.loadMarks();
+    mainPin.removeEventListener('click', onMainPinClick);
   };
 
   mainPin.addEventListener('click', onMainPinClick);
