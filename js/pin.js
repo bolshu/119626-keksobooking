@@ -136,6 +136,7 @@
 
     window.pin = {
       main: mainPin,
+      activatePage: activatePage,
       deactivatePage: deactivatePage
     };
   });
