@@ -35,6 +35,8 @@
       window.map.pins.appendChild(window.map.fragment);
       window.map.element.classList.remove('map--faded');
       form.classList.remove('ad-form--disabled');
+
+      window.map.loadMarks();
     }
   };
 
@@ -48,15 +50,6 @@
     window.map.element.classList.add('map--faded');
     form.classList.add('ad-form--disabled');
   };
-
-  var onMainPinClick = function () {
-    activatePage();
-    setAddresCoords();
-    window.map.loadMarks();
-    mainPin.removeEventListener('click', onMainPinClick);
-  };
-
-  mainPin.addEventListener('click', onMainPinClick);
 
   mainPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
