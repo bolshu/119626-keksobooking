@@ -51,6 +51,7 @@
 
   var onMainPinClick = function () {
     activatePage();
+    setAddresCoords();
     window.map.loadMarks();
   };
 
@@ -124,7 +125,6 @@
         };
         mainPin.addEventListener('click', onClickPreventDefault);
       }
-      activatePage();
       setAddresCoords();
     };
 

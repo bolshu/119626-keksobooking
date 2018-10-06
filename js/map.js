@@ -91,7 +91,6 @@
     var onSuccess = function (ads) {
       window.map.ads = ads;
       addPins(window.map.ads);
-      window.pin.activatePage();
     };
 
     var onError = function (errorMessage) {
