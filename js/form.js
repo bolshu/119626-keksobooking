@@ -184,6 +184,7 @@
     window.map.removePins();
     resetMainPinPosition();
     setDefaultPriceInput();
+    checkInputValidation();
     form.reset();
   };
   resetFormButton.addEventListener('click', onResetFormButtonClick);
