@@ -2,6 +2,7 @@
 (function () {
   var form = document.querySelector('.ad-form');
   var typeInput = form.querySelector('#type');
+  var titleInput = form.querySelector('#title');
   var priceInput = form.querySelector('#price');
   var timeInInput = form.querySelector('#timein');
   var timeOutInput = form.querySelector('#timeout');
@@ -82,26 +83,36 @@
   // validation
 
   var submitButton = form.querySelector('.ad-form__submit');
-  var formRequiredInputs = form.querySelectorAll('input:invalid');
-  var checkInputValidation = function () {
-    var BorderColor = {
-      error: 'red',
-      valid: '#d9d9d3'
-    };
-    for (var i = 0; i < formRequiredInputs.length; i++) {
-      var input = formRequiredInputs[i];
-      input.style.borderColor = !input.validity.valid ? BorderColor.error : BorderColor.valid;
-      var onInput = function () {
-        checkInputValidation(input);
-      };
-      input.addEventListener('input', onInput);
-    }
+  var BorderColor = {
+    error: 'red',
+    valid: '#d9d9d3'
+  };
+  var checkInputValidation = function (input) {
+    input.style.borderColor = !input.validity.valid ? BorderColor.error : BorderColor.valid;
   };
 
+  var onTitleInput = function () {
+    checkInputValidation(titleInput);
+  };
+  titleInput.addEventListener('input', onTitleInput);
+
+  var onPriceInput = function () {
+    checkInputValidation(priceInput);
+  };
+  priceInput.addEventListener('input', onPriceInput);
+
   var onSubmitButtonClick = function () {
-    checkInputValidation();
+    checkInputValidation(titleInput);
+    checkInputValidation(priceInput);
   };
   submitButton.addEventListener('click', onSubmitButtonClick);
+
+  var formInputs = form.querySelectorAll('input');
+  var resetInputsBorder = function () {
+    for (var i = 0; i < formInputs.length; i++) {
+      formInputs[i].style.borderColor = BorderColor.valid;
+    }
+  };
 
   // send form
 
@@ -184,7 +195,7 @@
     window.map.removePins();
     resetMainPinPosition();
     setDefaultPriceInput();
-    checkInputValidation();
+    resetInputsBorder();
     form.reset();
   };
   resetFormButton.addEventListener('click', onResetFormButtonClick);
