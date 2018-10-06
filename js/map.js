@@ -76,10 +76,6 @@
     removePins();
   };
 
-  var activatePage = function () {
-    window.pin.activatePage();
-  };
-
   var addPins = function (ads) {
     for (var i = 0; i < ADS_AMOUNT; i++) {
       if (ads[i] !== undefined) {
@@ -94,8 +90,8 @@
   var loadMarks = function () {
     var onSuccess = function (ads) {
       window.map.ads = ads;
-      activatePage();
       addPins(window.map.ads);
+      window.pin.activatePage();
     };
 
     var onError = function (errorMessage) {
