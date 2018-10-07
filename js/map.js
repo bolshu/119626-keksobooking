@@ -91,6 +91,9 @@
     var onSuccess = function (ads) {
       window.map.ads = ads;
       addPins(window.map.ads);
+      if (map.classList.contains('map--faded')) {
+        window.pin.activatePage();
+      }
     };
 
     var onError = function (errorMessage) {
@@ -119,8 +122,10 @@
 
       var onErrorPopupClick = function (clickEvt) {
         removeFeedbackPopup(clickEvt);
-        window.form.resetMainPinPosition();
         window.pin.deactivatePage();
+        if (clickEvt !== errorButton) {
+          window.form.resetMainPinPosition();
+        }
         document.removeEventListener('keydown', onEscPress);
       };
       errorElement.addEventListener('click', onErrorPopupClick);

@@ -2,6 +2,7 @@
 (function () {
   var form = document.querySelector('.ad-form');
   var typeInput = form.querySelector('#type');
+  var titleInput = form.querySelector('#title');
   var priceInput = form.querySelector('#price');
   var timeInInput = form.querySelector('#timein');
   var timeOutInput = form.querySelector('#timeout');
@@ -61,12 +62,12 @@
       var HUNDRED_ROOMS = '100';
       var NOT_FOR_GUESTS = '0';
       var roomValue = value === HUNDRED_ROOMS ? NOT_FOR_GUESTS : value;
-      for (var j = 0; j < capacityOptions.length; j++) {
+      for (var i = 0; i < capacityOptions.length; i++) {
         var flag = true;
-        if ((capacityOptions[j].value > NOT_FOR_GUESTS && capacityOptions[j].value <= roomValue) || (roomValue === NOT_FOR_GUESTS && capacityOptions[j].value === roomValue)) {
+        if ((capacityOptions[i].value > NOT_FOR_GUESTS && capacityOptions[i].value <= roomValue) || (roomValue === NOT_FOR_GUESTS && capacityOptions[i].value === roomValue)) {
           flag = false;
         }
-        capacityOptions[j].disabled = flag;
+        capacityOptions[i].disabled = flag;
       }
       capacityInput.value = roomValue;
     };
@@ -78,6 +79,40 @@
     limitationCapacity();
   };
   roomNumberInput.addEventListener('change', onRoomNumberInputChange);
+
+  // validation
+
+  var submitButton = form.querySelector('.ad-form__submit');
+  var BorderColor = {
+    error: 'red',
+    valid: '#d9d9d3'
+  };
+  var checkInputValidation = function (input) {
+    input.style.borderColor = !input.validity.valid ? BorderColor.error : BorderColor.valid;
+  };
+
+  var onTitleInput = function () {
+    checkInputValidation(titleInput);
+  };
+  titleInput.addEventListener('input', onTitleInput);
+
+  var onPriceInput = function () {
+    checkInputValidation(priceInput);
+  };
+  priceInput.addEventListener('input', onPriceInput);
+
+  var onSubmitButtonClick = function () {
+    checkInputValidation(titleInput);
+    checkInputValidation(priceInput);
+  };
+  submitButton.addEventListener('click', onSubmitButtonClick);
+
+  var formInputs = form.querySelectorAll('input');
+  var resetInputsBorder = function () {
+    for (var i = 0; i < formInputs.length; i++) {
+      formInputs[i].style.borderColor = BorderColor.valid;
+    }
+  };
 
   // send form
 
@@ -103,8 +138,6 @@
         }
       };
       document.addEventListener('keydown', onEscPress);
-
-      resetMainPinPosition();
 
       window.map.removeCard();
       form.reset();
@@ -159,12 +192,12 @@
   var onResetFormButtonClick = function (clickEvt) {
     clickEvt.preventDefault();
     window.pin.deactivatePage();
-    window.form.resetMainPinPosition();
     window.map.removePins();
+    resetMainPinPosition();
     setDefaultPriceInput();
+    resetInputsBorder();
     form.reset();
   };
-
   resetFormButton.addEventListener('click', onResetFormButtonClick);
 
   window.form = {

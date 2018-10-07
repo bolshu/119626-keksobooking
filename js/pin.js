@@ -35,8 +35,6 @@
       window.map.pins.appendChild(window.map.fragment);
       window.map.element.classList.remove('map--faded');
       form.classList.remove('ad-form--disabled');
-
-      window.map.loadMarks();
     }
   };
 
@@ -50,6 +48,24 @@
     window.map.element.classList.add('map--faded');
     form.classList.add('ad-form--disabled');
   };
+
+  var changePageState = function () {
+    if (window.map.element.classList.contains('map--faded')) {
+      activatePage();
+    }
+    if (!window.map.ads) {
+      window.map.loadMarks();
+    } else {
+      window.map.addPins(window.map.ads);
+    }
+  };
+
+  var onMainPinClick = function () {
+    setAddresCoords();
+    changePageState();
+  };
+
+  mainPin.addEventListener('click', onMainPinClick);
 
   mainPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
@@ -119,8 +135,8 @@
         };
         mainPin.addEventListener('click', onClickPreventDefault);
       }
-      activatePage();
       setAddresCoords();
+      changePageState();
     };
 
     document.addEventListener('mousemove', onMouseMove);
@@ -128,6 +144,7 @@
 
     window.pin = {
       main: mainPin,
+      activatePage: activatePage,
       deactivatePage: deactivatePage
     };
   });
