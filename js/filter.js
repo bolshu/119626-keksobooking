@@ -44,21 +44,22 @@
     };
 
     if (selectsFilters.length !== null) {
-      for (var i = 0; i < selectsFilters.length; i++) {
-        if (selectsFilters[i].value !== 'any') {
-          if (selectsFilters[i].id !== 'housing-price') {
-            filteredAds = filterByValue(selectsFilters[i], FilterRules[selectsFilters[i].id]);
+
+      selectsFilters.forEach(function (item) {
+        if (item.value !== 'any') {
+          if (item.id !== 'housing-price') {
+            filteredAds = filterByValue(item, FilterRules[item.id]);
           } else {
-            filteredAds = filterByPrice(selectsFilters[i]);
+            filteredAds = filterByPrice(item);
           }
         }
-      }
+      });
     }
 
     if (featuresFilters !== null) {
-      for (var j = 0; j < featuresFilters.length; j++) {
-        filteredAds = filterByFeatures(featuresFilters[j]);
-      }
+      featuresFilters.forEach(function (item) {
+        filteredAds = filterByFeatures(item);
+      });
     }
 
     if (filteredAds.length) {
