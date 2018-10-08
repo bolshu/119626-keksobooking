@@ -60,12 +60,17 @@
     }
   };
 
-  var onMainPinClick = function () {
-    setAddresCoords();
-    changePageState();
+  var onMainPinKeyup = function (keyupEvt) {
+    var SPACE_KEYCODE = 32;
+    var ENTER_KEYCODE = 13;
+    if (keyupEvt.keyCode === SPACE_KEYCODE || keyupEvt.keyCode === ENTER_KEYCODE) {
+      setAddresCoords();
+      changePageState();
+      mainPin.removeEventListener('keyup', onMainPinKeyup);
+    }
   };
 
-  mainPin.addEventListener('click', onMainPinClick);
+  mainPin.addEventListener('keyup', onMainPinKeyup);
 
   mainPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
