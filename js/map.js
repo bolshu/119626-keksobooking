@@ -1,14 +1,14 @@
 'use strict';
 
 (function () {
+  var PIN_ARROW_HEIGHT = 22;
+  var ADS_AMOUNT = 5;
+  var ESC_KEYCODE = 27;
   var map = document.querySelector('.map');
   var mapPins = document.querySelector('.map__pins');
-  var PIN_ARROW_HEIGHT = 22;
   var markTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
   var mainContainer = document.querySelector('main');
-  var ADS_AMOUNT = 5;
 
-  var ESC_KEYCODE = 27;
   var onPopupEscPress = function (keydownEvt) {
     if (keydownEvt.keyCode === ESC_KEYCODE) {
       removeCardPopup();
@@ -16,10 +16,10 @@
   };
 
   var removeActiveMark = function () {
-    var mapPinsCollection = mapPins.querySelectorAll('.map__pin');
-    for (var i = 0; i < mapPinsCollection.length; i++) {
-      mapPinsCollection[i].classList.remove('map__pin--active');
-    }
+    var pins = mapPins.querySelectorAll('.map__pin');
+    pins.forEach(function (item) {
+      item.classList.remove('map__pin--active');
+    });
   };
 
   var onMarkClick = function (evt, ad) {
@@ -62,9 +62,9 @@
 
   var removePins = function () {
     var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
-    for (var i = 0; i < pins.length; i++) {
-      pins[i].remove();
-    }
+    pins.forEach(function (item) {
+      item.remove();
+    });
     removeCardPopup();
   };
 

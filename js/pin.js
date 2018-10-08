@@ -7,12 +7,12 @@
   var filterInputs = document.querySelector('.map__filters').childNodes;
 
   var disableInputs = function () {
-    for (var i = 0; i < formInputs.length; i++) {
-      formInputs[i].disabled = true;
-    }
-    for (var j = 0; j < filterInputs.length; j++) {
-      filterInputs[j].disabled = true;
-    }
+    formInputs.forEach(function (item) {
+      item.disabled = true;
+    });
+    filterInputs.forEach(function (item) {
+      item.disabled = true;
+    });
   };
   disableInputs();
 
@@ -26,12 +26,12 @@
 
   var activatePage = function () {
     if (window.map.element.classList.contains('map--faded')) {
-      for (var i = 0; i < formInputs.length; i++) {
-        formInputs[i].disabled = false;
-      }
-      for (var j = 0; j < filterInputs.length; j++) {
-        filterInputs[j].disabled = false;
-      }
+      formInputs.forEach(function (item) {
+        item.disabled = false;
+      });
+      filterInputs.forEach(function (item) {
+        item.disabled = false;
+      });
       window.map.pins.appendChild(window.map.fragment);
       window.map.element.classList.remove('map--faded');
       form.classList.remove('ad-form--disabled');
@@ -39,12 +39,7 @@
   };
 
   var deactivatePage = function () {
-    for (var i = 0; i < formInputs.length; i++) {
-      formInputs[i].disabled = true;
-    }
-    for (var j = 0; j < filterInputs.length; j++) {
-      filterInputs[j].disabled = true;
-    }
+    disableInputs();
     window.map.element.classList.add('map--faded');
     form.classList.add('ad-form--disabled');
   };
@@ -60,12 +55,17 @@
     }
   };
 
-  var onMainPinClick = function () {
-    setAddresCoords();
-    changePageState();
+  var onMainPinKeyup = function (keyupEvt) {
+    var SPACE_KEYCODE = 32;
+    var ENTER_KEYCODE = 13;
+    if (keyupEvt.keyCode === SPACE_KEYCODE || keyupEvt.keyCode === ENTER_KEYCODE) {
+      setAddresCoords();
+      changePageState();
+      mainPin.removeEventListener('keyup', onMainPinKeyup);
+    }
   };
 
-  mainPin.addEventListener('click', onMainPinClick);
+  mainPin.addEventListener('keyup', onMainPinKeyup);
 
   mainPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
