@@ -16,10 +16,10 @@
   };
 
   var removeActiveMark = function () {
-    var mapPinsCollection = mapPins.querySelectorAll('.map__pin');
-    for (var i = 0; i < mapPinsCollection.length; i++) {
-      mapPinsCollection[i].classList.remove('map__pin--active');
-    }
+    var pins = mapPins.querySelectorAll('.map__pin');
+    pins.forEach(function (item) {
+      item.classList.remove('map__pin--active');
+    });
   };
 
   var onMarkClick = function (evt, ad) {
@@ -62,9 +62,9 @@
 
   var removePins = function () {
     var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
-    for (var i = 0; i < pins.length; i++) {
-      pins[i].remove();
-    }
+    pins.forEach(function (item) {
+      item.remove();
+    });
     removeCardPopup();
   };
 
