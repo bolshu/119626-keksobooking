@@ -115,7 +115,6 @@
   };
 
   // send form
-
   var onFormSubmit = function (submitEvt) {
     var formData = new FormData(form);
 
@@ -149,16 +148,15 @@
       var errorText = errorElement.querySelector('.error__message');
       var errorButton = errorElement.querySelector('.error__button');
       var onErrorButtonClick = function () {
-        document.querySelector('.error').remove();
+        errorElement.remove();
         errorButton.removeEventListener('click', onErrorButtonClick);
-        window.backend.request(onSuccess, onError, window.backend.upload.url, window.backend.upload.method, formData);
       };
       errorText.textContent = errorMessage;
       errorButton.addEventListener('click', onErrorButtonClick);
       window.map.mainContainer.insertAdjacentElement('afterbegin', errorElement);
 
-      var onErrorElementClick = function (clickEvt) {
-        window.map.removeFeedbackPopup(clickEvt);
+      var onErrorElementClick = function () {
+        errorElement.remove();
         document.removeEventListener('keydown', onEscPress);
       };
       errorElement.addEventListener('click', onErrorElementClick);
