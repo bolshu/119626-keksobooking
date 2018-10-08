@@ -1,14 +1,14 @@
 'use strict';
 
 (function () {
+  var PIN_ARROW_HEIGHT = 22;
+  var ADS_AMOUNT = 5;
+  var ESC_KEYCODE = 27;
   var map = document.querySelector('.map');
   var mapPins = document.querySelector('.map__pins');
-  var PIN_ARROW_HEIGHT = 22;
   var markTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
   var mainContainer = document.querySelector('main');
-  var ADS_AMOUNT = 5;
 
-  var ESC_KEYCODE = 27;
   var onPopupEscPress = function (keydownEvt) {
     if (keydownEvt.keyCode === ESC_KEYCODE) {
       removeCardPopup();
