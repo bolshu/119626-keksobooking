@@ -62,13 +62,13 @@
       var HUNDRED_ROOMS = '100';
       var NOT_FOR_GUESTS = '0';
       var roomValue = value === HUNDRED_ROOMS ? NOT_FOR_GUESTS : value;
-      for (var i = 0; i < capacityOptions.length; i++) {
+      capacityOptions.forEach(function (item) {
         var flag = true;
-        if ((capacityOptions[i].value > NOT_FOR_GUESTS && capacityOptions[i].value <= roomValue) || (roomValue === NOT_FOR_GUESTS && capacityOptions[i].value === roomValue)) {
+        if ((item.value > NOT_FOR_GUESTS && item.value <= roomValue) || (roomValue === NOT_FOR_GUESTS && item.value === roomValue)) {
           flag = false;
         }
-        capacityOptions[i].disabled = flag;
-      }
+        item.disabled = flag;
+      });
       capacityInput.value = roomValue;
     };
     disableCapacityOptions(roomInputValue);
@@ -107,11 +107,11 @@
   };
   submitButton.addEventListener('click', onSubmitButtonClick);
 
-  var formInputs = form.querySelectorAll('input');
   var resetInputsBorder = function () {
-    for (var i = 0; i < formInputs.length; i++) {
-      formInputs[i].style.borderColor = BorderColor.valid;
-    }
+    var formInputs = form.querySelectorAll('input');
+    formInputs.forEach(function (item) {
+      item.style.borderColor = BorderColor.valid;
+    });
   };
 
   // send form
