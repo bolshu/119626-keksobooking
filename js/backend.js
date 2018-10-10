@@ -38,8 +38,8 @@
   };
 
   window.backend = {
-    load: Load,
-    upload: Upload,
+    Load: Load,
+    Upload: Upload,
     request: getRequest
   };
 })();

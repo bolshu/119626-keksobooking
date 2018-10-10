@@ -171,7 +171,7 @@
       document.addEventListener('keydown', onEscPress);
     };
 
-    window.backend.request(onSuccess, onError, window.backend.upload.url, window.backend.upload.method, formData);
+    window.backend.request(onSuccess, onError, window.backend.Upload.url, window.backend.Upload.method, formData);
     submitEvt.preventDefault();
   };
 
