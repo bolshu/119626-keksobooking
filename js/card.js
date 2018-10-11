@@ -1,8 +1,6 @@
 'use strict';
 
 (function () {
-  var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
-
   var TYPES = {
     flat: {
       ru: 'Квартира',
@@ -21,6 +19,7 @@
       minPrice: 10000
     }
   };
+  var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
   var onCardCloseBtnClick = function () {
     window.map.removeCard();
