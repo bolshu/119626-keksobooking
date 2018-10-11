@@ -1,11 +1,12 @@
 'use strict';
 
 (function () {
-  var mapFilters = document.querySelector('.map__filters');
+  var DEBOUNCE_INTERVAL = 500;
   var PRICE_LIMIT = {
     low: 10000,
     high: 50000
   };
+  var mapFilters = document.querySelector('.map__filters');
 
   var updatePins = function (ads) {
     var filteredAds = ads.slice();
@@ -68,7 +69,6 @@
   };
 
   var debounce = function (cb) {
-    var DEBOUNCE_INTERVAL = 500;
     var lastTimeout = null;
 
     return function () {

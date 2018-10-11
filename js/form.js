@@ -1,5 +1,7 @@
 'use strict';
 (function () {
+  var HUNDRED_ROOMS = '100';
+  var NOT_FOR_GUESTS = '0';
   var form = document.querySelector('.ad-form');
   var typeInput = form.querySelector('#type');
   var titleInput = form.querySelector('#title');
@@ -59,8 +61,6 @@
     var capacityOptions = capacityInput.querySelectorAll('option');
 
     var disableCapacityOptions = function (value) {
-      var HUNDRED_ROOMS = '100';
-      var NOT_FOR_GUESTS = '0';
       var roomValue = value === HUNDRED_ROOMS ? NOT_FOR_GUESTS : value;
       capacityOptions.forEach(function (item) {
         var flag = true;
@@ -171,7 +171,7 @@
       document.addEventListener('keydown', onEscPress);
     };
 
-    window.backend.request(onSuccess, onError, window.backend.upload.url, window.backend.upload.method, formData);
+    window.backend.request(onSuccess, onError, window.backend.Upload.url, window.backend.Upload.method, formData);
     submitEvt.preventDefault();
   };
 

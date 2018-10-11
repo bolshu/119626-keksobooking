@@ -105,7 +105,7 @@
       var onErrorButtonClick = function () {
         document.querySelector('.error').remove();
         errorButton.removeEventListener('click', onErrorButtonClick);
-        window.backend.request(onSuccess, onError, window.backend.load.url, window.backend.load.method);
+        window.backend.request(onSuccess, onError, window.backend.Load.url, window.backend.Load.method);
       };
 
       errorText.textContent = errorMessage;
@@ -131,7 +131,7 @@
       errorElement.addEventListener('click', onErrorPopupClick);
     };
 
-    window.backend.request(onSuccess, onError, window.backend.load.url, window.backend.load.method);
+    window.backend.request(onSuccess, onError, window.backend.Load.url, window.backend.Load.method);
   };
 
   window.map = {

@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+  var SPACE_KEYCODE = 32;
+  var ENTER_KEYCODE = 13;
   var mainPin = document.querySelector('.map__pin--main');
   var form = document.querySelector('.ad-form');
   var formInputs = document.querySelectorAll('.ad-form fieldset');
@@ -56,8 +58,6 @@
   };
 
   var onMainPinKeyup = function (keyupEvt) {
-    var SPACE_KEYCODE = 32;
-    var ENTER_KEYCODE = 13;
     if (keyupEvt.keyCode === SPACE_KEYCODE || keyupEvt.keyCode === ENTER_KEYCODE) {
       setAddresCoords();
       changePageState();
